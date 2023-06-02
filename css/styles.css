@@ -1,0 +1,125 @@
+
+/**
+results
+ */
+
+#cq-results {
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+#cq-results h2,
+#cq-results h3,
+.email-results-form h3 {
+    color: #333;
+}
+
+.cq-thank-you-message {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+.email-results-form {
+    margin-bottom: 20px;
+}
+
+#send-results-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#email-address {
+    margin-bottom: 10px;
+}
+
+#send-results-form button {
+    background-color: #0073aa;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+#email-sent-message {
+    color: green;
+    font-weight: bold;
+}
+/**
+Quiz styles
+ */
+
+/* General quiz container */
+.entry-content.wp-block-post-content.has-global-padding.is-layout-constrained {
+    font-family: Arial, sans-serif;
+}
+
+/* Steps container */
+.cq-steps {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Individual steps */
+.cq-step {
+    padding: 10px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #333;
+    border-radius: 5px;
+}
+
+/* Active step */
+.cq-step.active {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+/* Quiz steps */
+.qp-step {
+    margin-bottom: 20px;
+}
+
+/* Quiz question */
+.qp-question {
+    margin-bottom: 10px;
+}
+
+/* Quiz navigation */
+.qp-navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Next, previous and submit buttons */
+.qp-navigation button,
+.qp-navigation input[type="submit"] {
+    background-color: #0073aa;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+/* Radio button labels */
+.qp-question label {
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+/* Radio buttons */
+.qp-question input[type="radio"] {
+    margin-right: 5px;
+}
