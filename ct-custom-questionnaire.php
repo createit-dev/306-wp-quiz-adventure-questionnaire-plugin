@@ -143,8 +143,8 @@ function cq_display_questionnaire_shortcode($atts) {
 
     // Prepare output
     $output = '<div id="cq-questionnaire">';
-    $output .= cq_display_steps($step_ids);
-    $output .= cq_display_questionnaire($step_ids);
+    $output .= cq_display_steps($step_ids, $quiz_post->ID);
+    $output .= cq_display_questionnaire($step_ids, $quiz_post->ID);
     $output .= '</div>';
 
     return $output;
@@ -157,19 +157,21 @@ add_shortcode('cq_questionnaire', 'cq_display_questionnaire_shortcode');
  * Create functions to render the steps and questions:
  */
 
-function cq_display_steps($step_ids) {
-    // Get the terms for these step IDs
-    $steps = get_terms( array(
-        'taxonomy' => 'cq_step',
-        'include' => $step_ids,
-        'orderby' => 'include',
-    ) );
+function cq_display_steps($step_ids, $quiz_id) {
 
+    $steps = get_post_meta( $quiz_id, 'steps', true );
 
     $output = '<div class="cq-steps">';
-    foreach ($steps as $key => $step) {
-        $output .= '<div class="cq-step cq-step-' . ($key + 1) . '" data-step-id="' . $step->term_id . '">' . $step->name . '</div>';
+    if ( $steps ) {
+        $step_ids = explode( ',', $steps );
+        $step_counter = 0;
+        foreach ( $step_ids as $key => $step_id ) {
+            $step_counter++;
+            $term = get_term_by( 'id', $step_id, 'cq_step' );
+            $output .= '<div class="cq-step cq-step-' . ($step_counter) . '" data-step-id="' . $term->term_id . '">' . $term->name . '</div>';
+        }
     }
+
     $output .= '</div>';
 
     return $output;
@@ -178,24 +180,20 @@ function cq_display_steps($step_ids) {
 
 
 // Shortcode to display the questionnaire
-function cq_display_questionnaire($step_ids) {
-    // Retrieve the steps and questions
-    $steps = get_terms( array(
-        'taxonomy' => 'cq_step',
-        'orderby' => 'term_order',
-        'order' => 'ASC',
-        'hide_empty' => false,
-        'include' => $step_ids, // limit the results to the specified step IDs
-    ) );
+function cq_display_questionnaire($step_ids, $quiz_id) {
+
+    $steps = get_post_meta( $quiz_id, 'steps', true);
 
     // Initialize the output variable
     $output = '<div class="qp-questionnaire" id="qp-questionnaire">';
-
-    if ($steps) {
-        $step_counter = 1;
-        foreach ($steps as $step) {
+    if ( $steps ) {
+        $step_ids = explode( ',', $steps );;
+        $step_counter = 0;
+        foreach ( $step_ids as $key => $step_id ) {
+            $step_counter++;
+            $term = get_term_by( 'id', $step_id, 'cq_step' );
             $output .= '<div class="qp-step" id="qp-step-' . esc_attr($step_counter) . '" ' . ($step_counter > 1 ? 'style="display:none;"' : '') . '>';
-            $output .= '<h2>' . esc_html($step->name) . '</h2>';
+            $output .= '<h2>' . esc_html($term->name) . '</h2>';
 
             $question_args = array(
                 'post_type' => 'cq_question',
@@ -204,7 +202,7 @@ function cq_display_questionnaire($step_ids) {
                     array(
                         'taxonomy' => 'cq_step',
                         'field' => 'term_id',
-                        'terms' => $step->term_id,
+                        'terms' => $term->term_id,
                     ),
                 ),
                 'orderby' => 'menu_order',
@@ -225,10 +223,13 @@ function cq_display_questionnaire($step_ids) {
             wp_reset_postdata();
 
             $output .= '<div class="qp-navigation">';
+
+            $step_ids = explode( ',', $steps );
+
             if ($step_counter > 1) {
                 $output .= '<button type="button" class="qp-prev-step">Previous</button>';
             }
-            if ($step_counter < count($steps)) {
+            if ($step_counter < count($step_ids)) {
                 $output .= '<button type="button" class="qp-next-step">Next</button>';
             } else {
                 $output .= '<input type="submit" value="Submit" class="qp-submit">';
@@ -236,7 +237,6 @@ function cq_display_questionnaire($step_ids) {
             $output .= '</div>';
 
             $output .= '</div>';
-            $step_counter++;
         }
     }
 
