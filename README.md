@@ -105,3 +105,6 @@ To help you visualize the potential of our plugin, we've prepared a sample quiz,
 - Score 0%-40%: Making some improvements to your daily habits can lead to better overall health. Consider focusing on exercise, nutrition, sleep, stress management, and hydration for a healthier lifestyle.
 - Score 41%-75%: You are taking some steps towards a healthier lifestyle, but there is still room for improvement. Prioritize areas in which you scored lower to make the biggest impact on your overall health.
 - Score 76%-100%: Congratulations! You are leading a healthy lifestyle, making conscious decisions to care for your mind and body. Keep up this fantastic work, and continue being a role model for others.
+- 
+
+Read more on our site: https://www.createit.com/blog/mastering-wordpress-quiz-plugins/
